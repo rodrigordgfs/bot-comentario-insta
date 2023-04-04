@@ -69,13 +69,16 @@ class InstagramBot:
                     EC.presence_of_element_located((By.CLASS_NAME, "x1i0vuye"))
                 )
                 comment_input.clear()
-                comment_input.send_keys(comment)
+                
+                for letter in comment:
+                    comment_input.send_keys(letter)
+                    time.sleep(random.randint(1, 5) / 30)
 
                 actions = ActionChains(driver)
                 actions.send_keys(Keys.ENTER)
                 actions.perform()
 
-                time.sleep(self.WAIT_SHORT_TIME)
+                time.sleep(75)
                 comment_input.clear()
 
         except Exception as e:
