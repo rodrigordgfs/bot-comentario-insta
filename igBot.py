@@ -18,6 +18,7 @@ class InstagramBot:
     def __init__(self, username, password):
         self.options = Options()
         self.options.binary_location = os.environ.get("FIREFOX_PATH")
+        self.file_name = os.environ.get("FILE_NAME")
         self.username = username
         self.password = password
         self.driver = webdriver.Firefox(
@@ -28,6 +29,7 @@ class InstagramBot:
             'username': (By.XPATH, "//input[@name='username']"),
             'password': (By.XPATH, "//input[@name='password']")
         }
+        self.comments_count = 0
 
     def login(self):
         driver = self.driver
@@ -49,36 +51,41 @@ class InstagramBot:
         except Exception as e:
             print("Error logging in:", e)
 
+    def increase_comments_count(self, comment):
+        self.comments_count += 1
+        print("{} - {} ".format(self.comments_count, comment))
+
     def comment_photo(self, url):
         time.sleep(self.WAIT_LONG_TIME)
         driver = self.driver
         driver.get(url)
 
-        with open("users.json", "r") as file:
+        with open(self.file_name, "r") as file:
             user_file = json.load(file)
             comment_list = random.sample(user_file, len(user_file))
 
         try:
             for comment in comment_list:
                 comment_button = WebDriverWait(driver, self.WAIT_LONG_TIME).until(
-                    EC.element_to_be_clickable((By.CLASS_NAME, "x1i0vuye"))
+                    EC.element_to_be_clickable((By.CLASS_NAME, "xs3hnx8"))
                 )
                 comment_button.click()
 
                 comment_input = WebDriverWait(driver, self.WAIT_LONG_TIME).until(
-                    EC.presence_of_element_located((By.CLASS_NAME, "x1i0vuye"))
+                    EC.presence_of_element_located((By.CLASS_NAME, "xs3hnx8"))
                 )
                 comment_input.clear()
-                
+
                 for letter in comment:
                     comment_input.send_keys(letter)
-                    time.sleep(random.randint(1, 5) / 30)
+                    time.sleep(random.randint(1, 2) / 30)
 
-                actions = ActionChains(driver)
-                actions.send_keys(Keys.ENTER)
-                actions.perform()
+                driver.find_element(By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/section/main/div/div[1]/div/div[2]/section/div/form/div/div[2]/div").click()
 
-                time.sleep(75)
+                self.increase_comments_count(comment)
+
+
+                time.sleep(15)
                 comment_input.clear()
 
         except Exception as e:
