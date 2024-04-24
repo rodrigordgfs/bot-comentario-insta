@@ -1,8 +1,6 @@
 from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.firefox.options import Options
+from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
@@ -12,17 +10,17 @@ import random
 
 
 class InstagramBot:
-    WAIT_LONG_TIME = 10
-    WAIT_SHORT_TIME = 5
+    WAIT_LONG_TIME = 30
+    WAIT_SHORT_TIME = 15
 
     def __init__(self, username, password):
-        self.options = Options()
-        self.options.binary_location = os.environ.get("FIREFOX_PATH")
+        self.options = webdriver.FirefoxOptions()
+        self.options.binary = r'C:\Program Files\Mozilla Firefox\firefox.exe'
         self.file_name = os.environ.get("FILE_NAME")
         self.username = username
         self.password = password
         self.driver = webdriver.Firefox(
-            executable_path=os.environ.get("GECKODRIVER_PATH"),
+            executable_path='geckodriver.exe',
             options=self.options
         )
         self.locators = {
@@ -80,10 +78,10 @@ class InstagramBot:
                     comment_input.send_keys(letter)
                     time.sleep(random.randint(1, 2) / 30)
 
-                driver.find_element(By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/section/main/div/div[1]/div/div[2]/section/div/form/div/div[2]/div").click()
+                driver.find_element(
+                    By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div[1]/div/div[2]/div/div[4]/section/div/form/div/div[2]/div").click()
 
                 self.increase_comments_count(comment)
-
 
                 time.sleep(15)
                 comment_input.clear()

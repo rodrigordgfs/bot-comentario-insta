@@ -56,13 +56,12 @@ Para o funcionamento do bot deve existir o arquivo _users.json_ na raiz do proje
 
 Deve ser criado um arquivo chamado _.env_ com as seguintes variaveis
 
-| Nome             | tipo   | descriçãp                                   |
-| ---------------- | ------ | ------------------------------------------- |
-| USERNAME         | String | Nome de login do usuário                    |
-| PASSWORD         | String | Senha de login do usuário                   |
-| GECKODRIVER_PATH | String | Path de onde esta o arquivo geckodriver.exe |
-| FIREFOX_PATH     | String | Path de onde esta instalado o Firefox       |
-| POST_URL         | String | URL do post que deseja ser comentao         |
+| Nome      | tipo   | descriçãp                                                  |
+| --------- | ------ | ---------------------------------------------------------- |
+| USERNAME  | String | Nome de login do usuário                                   |
+| PASSWORD  | String | Senha de login do usuário                                  |
+| POST_URL  | String | URL do post que deseja ser comentado                       |
+| FILE_NAME | String | Nome do JSON do arquivo com os usuarios a serem comentados |
 
 ## Uso/Exemplos
 
